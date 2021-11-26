@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Instituição
+model Institution {
+  id                            String                          @id @default(uuid())
+  name                          String
+  description                   String
+  isActive                      Boolean
+  institutionTypeId             String
+  institutionType               InstitutionType                 @relation(fields: [institutionTypeId], references: [id])
+  MedicalProcedureAuthorization MedicalProcedureAuthorization[]
+  AssociateRecord               AssociateRecord[]
+}
+
+// Tipo de institutição
+model InstitutionType {
+  id          String        @id @default(uuid())
+  name        String
+  description String
+  Institution Institution[]
+}
+
+// Ficha do paciente na instituição
+model AssociateRecord {
+  id                 String           @id @default(uuid())
+  description        String
+  associateId        String
+  institutionId      String
+  medicalProcedureId String
+  colaboradorId      String
+  medicalProcedure   MedicalProcedure @relation(fields: [medicalProcedureId], references: [id])
+  institution        Institution      @relation(fields: [institutionId], references: [id])
+}
+
+// Procedimento médico
+model MedicalProcedure {
+  id              String            @id @default(uuid())
+  name            String
+  description     String
+  AssociateRecord AssociateRecord[]
+}
+
+// Tabela para identificar se o procedimento cirurgico foi autorizado
+model MedicalProcedureAuthorization {
+  id                 String      @id @default(uuid())
+  institutionId      String
+  associateId        String
+  medicalProcedureId String
+  isAuthorized       Boolean      @default(false)
+  institution        Institution @relation(fields: [institutionId], references: [id])
+}
