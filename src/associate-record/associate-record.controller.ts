@@ -11,31 +11,31 @@ export class AssociateRecordController {
   ) {}
 
   @MessagePattern({ cmd: 'associate-record.create' })
-  create(payload: any) {
+  private create(payload: any) {
     this.logger.log(payload);
     return this.associateRecordService.create(payload);
   }
 
   @MessagePattern({ cmd: 'associate-record.update' })
-  update(payload: any) {
+  private update(payload: any) {
     const { id } = payload;
     return this.associateRecordService.update({ where: { id }, data: payload });
   }
 
   @MessagePattern({ cmd: 'associate-record.remove' })
-  remove(payload: any) {
+  private remove(payload: any) {
     const { id } = payload;
     return this.associateRecordService.delete({ id });
   }
 
   @MessagePattern({ cmd: 'associate-record.list' })
-  list(payload: any) {
+  private list(payload: any) {
     const { id } = payload;
     return this.associateRecordService.associateRecord({ id });
   }
 
   @MessagePattern({ cmd: 'associate-record.all' })
-  all(payload: any) {
+  private all(payload: any) {
     return this.associateRecordService.associateRecords(payload);
   }
 }

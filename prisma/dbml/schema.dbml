@@ -1,0 +1,56 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Institution {
+  id String [pk]
+  name String [not null]
+  description String [not null]
+  isActive Boolean [not null]
+  institutionTypeId String [not null]
+  institutionType InstitutionType [not null]
+  MedicalProcedureAuthorization MedicalProcedureAuthorization [not null]
+  AssociateRecord AssociateRecord [not null]
+}
+
+Table InstitutionType {
+  id String [pk]
+  name String [not null]
+  description String [not null]
+  Institution Institution [not null]
+}
+
+Table AssociateRecord {
+  id String [pk]
+  description String [not null]
+  associateId String [not null]
+  institutionId String [not null]
+  medicalProcedureId String [not null]
+  colaboradorId String [not null]
+  medicalProcedure MedicalProcedure [not null]
+  institution Institution [not null]
+}
+
+Table MedicalProcedure {
+  id String [pk]
+  name String [not null]
+  description String [not null]
+  AssociateRecord AssociateRecord [not null]
+}
+
+Table MedicalProcedureAuthorization {
+  id String [pk]
+  institutionId String [not null]
+  associateId String [not null]
+  medicalProcedureId String [not null]
+  isAuthorized Boolean [not null, default: false]
+  institution Institution [not null]
+}
+
+Ref: Institution.institutionTypeId > InstitutionType.id
+
+Ref: AssociateRecord.medicalProcedureId > MedicalProcedure.id
+
+Ref: AssociateRecord.institutionId > Institution.id
+
+Ref: MedicalProcedureAuthorization.institutionId > Institution.id

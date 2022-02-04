@@ -11,13 +11,13 @@ export class MedicalProcedureController {
   ) {}
 
   @MessagePattern({ cmd: 'medical-procedure.create' })
-  create(payload: any) {
+  private create(payload: any) {
     this.logger.log(payload);
     return this.medicalProcedureService.create(payload);
   }
 
   @MessagePattern({ cmd: 'medical-procedure.update' })
-  update(payload: any) {
+  private update(payload: any) {
     const { id } = payload;
     return this.medicalProcedureService.update({
       where: { id },
@@ -26,19 +26,19 @@ export class MedicalProcedureController {
   }
 
   @MessagePattern({ cmd: 'medical-procedure.remove' })
-  remove(payload: any) {
+  private remove(payload: any) {
     const { id } = payload;
     return this.medicalProcedureService.delete({ id });
   }
 
   @MessagePattern({ cmd: 'medical-procedure.list' })
-  list(payload: any) {
+  private list(payload: any) {
     const { id } = payload;
     return this.medicalProcedureService.medicalProcedure({ id });
   }
 
   @MessagePattern({ cmd: 'medical-procedure.all' })
-  all(payload: any) {
+  private all(payload: any) {
     return this.medicalProcedureService.medicalProcedures(payload);
   }
 }

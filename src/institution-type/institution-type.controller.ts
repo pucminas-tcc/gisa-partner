@@ -11,31 +11,31 @@ export class InstitutionTypeController {
   ) {}
 
   @MessagePattern({ cmd: 'institution-type.create' })
-  create(payload: any) {
+  private create(payload: any) {
     this.logger.log(payload);
     return this.institutionTypeService.create(payload);
   }
 
   @MessagePattern({ cmd: 'institution-type.update' })
-  update(payload: any) {
+  private update(payload: any) {
     const { id } = payload;
     return this.institutionTypeService.update({ where: { id }, data: payload });
   }
 
   @MessagePattern({ cmd: 'institution-type.remove' })
-  remove(payload: any) {
+  private remove(payload: any) {
     const { id } = payload;
     return this.institutionTypeService.delete({ id });
   }
 
   @MessagePattern({ cmd: 'institution-type.list' })
-  list(payload: any) {
+  private list(payload: any) {
     const { id } = payload;
     return this.institutionTypeService.institution({ id });
   }
 
   @MessagePattern({ cmd: 'institution-type.all' })
-  all(payload: any) {
+  private all(payload: any) {
     return this.institutionTypeService.institutions(payload);
   }
 }
